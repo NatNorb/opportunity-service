@@ -4,6 +4,7 @@ import com.ironhack.opportunityservice.dao.Opportunity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -11,6 +12,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     //Find opportunity by id
     Optional<Opportunity> findById(Long id);
+
+    List<Opportunity> findBySalesRepId(Long id);
 /*
     //Report Opportunities by SalesRep
    // @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r GROUP BY r.repName ORDER BY r.repName")

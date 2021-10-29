@@ -1,5 +1,6 @@
 package com.ironhack.opportunityservice.dao;
 
+import com.ironhack.opportunityservice.dto.OpportunityDTO;
 import com.ironhack.opportunityservice.enums.Status;
 import com.ironhack.opportunityservice.enums.Truck;
 import com.ironhack.opportunityservice.exceptions.ExceedsMaxLength;
@@ -45,13 +46,8 @@ public class Opportunity {
     private Long salesRepId;
 
 
-    public Opportunity(Truck product, int quantity, Long decisionMaker) throws ExceedsMaxLength {
-        setTruck(product);
-        setQuantity(quantity);
-        setDecisionMaker(decisionMaker);
-    }
 
-    public Opportunity(Truck product, int quantity, Long decisionMaker, Long salesRepId) throws ExceedsMaxLength {
+    public Opportunity(Truck product, int quantity, Long decisionMaker, Long salesRepId) {
         this.status = Status.OPEN;
         setTruck(product);
         setQuantity(quantity);
@@ -59,13 +55,14 @@ public class Opportunity {
         setSalesRepId(salesRepId);
     }
 
-    public Opportunity(Status status, Truck product, int quantity, Long decisionMaker, Long salesRepId) throws ExceedsMaxLength {
+    public Opportunity(Status status, Truck product, int quantity, Long decisionMaker, Long salesRepId)  {
         setStatus(status);
         setTruck(product);
         setQuantity(quantity);
         setDecisionMaker(decisionMaker);
         setSalesRepId(salesRepId);
     }
+
 
     public Truck getProduct() {
         return product;
@@ -75,7 +72,7 @@ public class Opportunity {
         this.product = product;
     }
 
-    public void setQuantity(int quantity) throws ExceedsMaxLength {
+    public void setQuantity(int quantity)  {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be positive. Please try again.");
         }

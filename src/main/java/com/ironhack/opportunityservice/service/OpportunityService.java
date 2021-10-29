@@ -1,5 +1,6 @@
 package com.ironhack.opportunityservice.service;
 
+import com.ironhack.opportunityservice.dto.OpportunityDTO;
 import com.ironhack.opportunityservice.repository.OpportunityRepository;
 import com.ironhack.opportunityservice.dao.Opportunity;
 import com.ironhack.opportunityservice.enums.Status;
@@ -31,6 +32,14 @@ public class OpportunityService {
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There is not enough resources");
         }
+    }
+
+    public Opportunity createOpp(OpportunityDTO opportunityDTO){
+        Opportunity newOpp = opportunityRepository.save(new Opportunity(opportunityDTO.getProduct(),
+                                                                 opportunityDTO.getQuantity(),
+                                                                 opportunityDTO.getDecisionMaker(),
+                                                                 opportunityDTO.getSalesRepId()));
+        return newOpp;
     }
 
 }

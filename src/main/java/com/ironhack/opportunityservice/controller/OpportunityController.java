@@ -1,6 +1,7 @@
 package com.ironhack.opportunityservice.controller;
 
 import com.ironhack.opportunityservice.dao.Opportunity;
+import com.ironhack.opportunityservice.dto.OpportunityDTO;
 import com.ironhack.opportunityservice.repository.OpportunityRepository;
 import com.ironhack.opportunityservice.service.OpportunityService;
 import com.ironhack.opportunityservice.exceptions.EmptyStringException;
@@ -34,9 +35,21 @@ public class OpportunityController {
         return opportunityRepository.findById(id);
     }
 
+    @GetMapping("/sales-rep/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Opportunity> getBySalesRepId(@PathVariable Long id){
+        return opportunityRepository.findBySalesRepId(id);
+    }
+
+
     @PutMapping("/{id}/{status}")
     public Opportunity changeStatus(@PathVariable Long id, @PathVariable String status) throws EmptyStringException, InvalidEnumException, ExceedsMaxLength {
         return opportunityService.changeStatus(id, status);
+    }
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public Opportunity createOpp(@RequestBody OpportunityDTO opportunityDTO){
+        return opportunityService.createOpp(opportunityDTO);
     }
 
 
