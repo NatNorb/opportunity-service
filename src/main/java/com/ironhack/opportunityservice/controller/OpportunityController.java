@@ -52,6 +52,13 @@ public class OpportunityController {
         return opportunityService.createOpp(opportunityDTO);
     }
 
+    @GetMapping("/sales-repAndStatus/{id}/{status}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Opportunity> getBySalesRepIdAndStatus(@PathVariable Long id, @PathVariable String status){
+        return opportunityRepository.findBySalesRepIdAndStatus(id, status);
+    }
+
+
 
 
     /*
