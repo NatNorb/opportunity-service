@@ -38,8 +38,14 @@ public class OpportunityService {
         Opportunity newOpp = opportunityRepository.save(new Opportunity(opportunityDTO.getProduct(),
                                                                  opportunityDTO.getQuantity(),
                                                                  opportunityDTO.getDecisionMaker(),
+                                                                 opportunityDTO.getAccountId(),
                                                                  opportunityDTO.getSalesRepId()));
         return newOpp;
+    }
+
+    public void delete(Long id){
+        Optional<Opportunity> opp = opportunityRepository.findById(id);
+        opportunityRepository.delete(opp.get());
     }
 
 }

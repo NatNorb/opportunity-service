@@ -17,10 +17,50 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     List<Opportunity> findBySalesRepId(Long id);
 
-    @Query(value = "SELECT * FROM opportunity WHERE sales_rep_id = :id and status = :status ", nativeQuery = true)
+    @Query(value = "SELECT * FROM opportunity WHERE sales_rep_id = :id and status = upper( :status ) ", nativeQuery = true)
     List<Opportunity> findBySalesRepIdAndStatus(@Param("id") Long id, @Param("status") String status);
 
-    // List<Opportunity> findBySalesRepIdAndStatus(Long id, Optional<String> status);
+    @Query(value = "SELECT COUNT(*) FROM opportunity WHERE product = upper( :product )", nativeQuery = true)
+    Long countByProduct(@Param("product") String product);
+
+    @Query(value = "SELECT COUNT(*) FROM opportunity WHERE product = upper( :product ) and status = upper( :status ) ", nativeQuery = true)
+    Long countByProductAndStatus(@Param("product") String product, @Param("status") String status);
+
+    @Query(value = "SELECT AVG(quantity*1.0) FROM opportunity", nativeQuery = true)
+    Double meanProductQuantity();
+
+    @Query(value = "SELECT MAX(quantity) FROM opportunity", nativeQuery = true)
+    Long maxProductQuantity();
+
+    @Query(value = "SELECT MIN(quantity) FROM opportunity", nativeQuery = true)
+    Long minProductQuantity();
+
+//    @Query(value = "SELECT AVG(dd.quantity) AS median_val " +
+//            "FROM (SELECT opportunity.quantity, @rownum\\:=@rownum+1 as 'row_number', @total_rows\\:=@rownum " +
+//            "FROM opportunity, (SELECT @rownum\\:=0) r " +
+//            "ORDER BY opportunity.quantity) as dd " +
+//            "WHERE dd.row_number IN ( FLOOR((@total_rows+1)/2), FLOOR((@total_rows+2)/2) )", nativeQuery = true)
+ //   Double medianProductQuantity();
+
+    @Query(value = "SELECT AVG(quantity*1.0) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
+    Double meanByAccId(@Param("id") Long id);
+
+    @Query(value = "SELECT MAX(quantity) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
+    Long maxByAccId(@Param("id") Long id);
+
+    @Query(value = "SELECT MIN(quantity) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
+    Long minByAccId(@Param("id") Long id);
+
+//    @Query(value = "SELECT AVG(dd.quantity) AS median_val " +
+//            "FROM (SELECT opportunity.quantity, @rownum\\:=@rownum+1 as 'row_number', @total_rows\\:=@rownum " +
+//                    "FROM opportunity, (SELECT @rownum\\:=0) r " +
+//                                        "ORDER BY opportunity.quantity) as dd " +
+//            "WHERE dd.row_number IN ( FLOOR((@total_rows+1)/2), FLOOR((@total_rows+2)/2) )", nativeQuery = true)
+   // Double medianByAccId(@Param("id") Long id);
+
+
+
+
 /*
     //Report Opportunities by SalesRep
    // @Query("SELECT r.repName, COUNT(o) FROM Opportunity o RIGHT JOIN o.salesRep r GROUP BY r.repName ORDER BY r.repName")

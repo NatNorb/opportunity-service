@@ -47,19 +47,21 @@ public class Opportunity {
 
 
 
-    public Opportunity(Truck product, int quantity, Long decisionMaker, Long salesRepId) {
+    public Opportunity(Truck product, int quantity, Long decisionMaker, Long accountId, Long salesRepId) {
         this.status = Status.OPEN;
         setTruck(product);
         setQuantity(quantity);
         setDecisionMaker(decisionMaker);
+        setAccountId(accountId);
         setSalesRepId(salesRepId);
     }
 
-    public Opportunity(Status status, Truck product, int quantity, Long decisionMaker, Long salesRepId)  {
+    public Opportunity(Status status, Truck product, int quantity, Long decisionMaker, Long accountId, Long salesRepId)  {
         setStatus(status);
         setTruck(product);
         setQuantity(quantity);
         setDecisionMaker(decisionMaker);
+        setAccountId(accountId);
         setSalesRepId(salesRepId);
     }
 
