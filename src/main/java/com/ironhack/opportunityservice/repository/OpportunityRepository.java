@@ -35,12 +35,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query(value = "SELECT MIN(quantity) FROM opportunity", nativeQuery = true)
     Long minProductQuantity();
 
-//    @Query(value = "SELECT AVG(dd.quantity) AS median_val " +
-//            "FROM (SELECT opportunity.quantity, @rownum\\:=@rownum+1 as 'row_number', @total_rows\\:=@rownum " +
-//            "FROM opportunity, (SELECT @rownum\\:=0) r " +
-//            "ORDER BY opportunity.quantity) as dd " +
-//            "WHERE dd.row_number IN ( FLOOR((@total_rows+1)/2), FLOOR((@total_rows+2)/2) )", nativeQuery = true)
- //   Double medianProductQuantity();
+    @Query(value = "SELECT MEDIAN(quantity*1.0) FROM opportunity", nativeQuery = true)
+    Double medianProductQuantity();
 
     @Query(value = "SELECT AVG(quantity*1.0) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
     Double meanByAccId(@Param("id") Long id);
@@ -51,12 +47,8 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     @Query(value = "SELECT MIN(quantity) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
     Long minByAccId(@Param("id") Long id);
 
-//    @Query(value = "SELECT AVG(dd.quantity) AS median_val " +
-//            "FROM (SELECT opportunity.quantity, @rownum\\:=@rownum+1 as 'row_number', @total_rows\\:=@rownum " +
-//                    "FROM opportunity, (SELECT @rownum\\:=0) r " +
-//                                        "ORDER BY opportunity.quantity) as dd " +
-//            "WHERE dd.row_number IN ( FLOOR((@total_rows+1)/2), FLOOR((@total_rows+2)/2) )", nativeQuery = true)
-   // Double medianByAccId(@Param("id") Long id);
+    @Query(value = "SELECT MEDIAN(quantity*1.0) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
+    Double medianByAccId(@Param("id") Long id);
 
 
 

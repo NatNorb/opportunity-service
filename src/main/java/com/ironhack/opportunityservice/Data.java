@@ -18,7 +18,7 @@ public class Data {
 
     public void populate() throws ExceedsMaxLength {
         List<Opportunity> opportunities = opportunityRepository.saveAll(List.of(
-                new Opportunity(Status.OPEN, Truck.FLATBED, 1, 1l, 1l, 1l),
+                new Opportunity(Status.OPEN, Truck.FLATBED, 1, 1l, 2l, 1l),
                 new Opportunity(Status.CLOSED_LOST,Truck.BOX, 2, 2l, 2l, 2l),
                 new Opportunity(Status.CLOSED_LOST,Truck.HYBRID, 3, 3l, 3l, 1l),
                 new Opportunity(Status.OPEN,Truck.BOX, 4, 4l, 3l, 2l),

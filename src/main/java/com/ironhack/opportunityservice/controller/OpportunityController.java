@@ -110,10 +110,10 @@ public class OpportunityController {
         return opportunityRepository.minProductQuantity();
     }
 
-//    @GetMapping("/product/median")
-//    public Double findMedianProductQuantity(){
-//        return opportunityRepository.medianProductQuantity();
-//    }
+    @GetMapping("/product/median")
+    public Double findMedianProductQuantity(){
+        return opportunityRepository.medianProductQuantity();
+    }
 
     @GetMapping("/mean/{accountId}")
     public Double findMeanOppsByAccount(@PathVariable(name = "accountId") Long id){
@@ -130,10 +130,10 @@ public class OpportunityController {
         return opportunityRepository.minByAccId(id);
     }
 
-//    @GetMapping("/median/{accountId}")
-//    public Double findMedianOppsByAccount(@PathVariable(name = "accountId") Long accountId){
-//        return opportunityRepository.medianByAccId(accountId);
-//    }
+    @GetMapping("/median/{accountId}")
+    public Double findMedianOppsByAccount(@PathVariable(name = "accountId") Long accountId){
+        return opportunityRepository.medianByAccId(accountId);
+    }
 
 
 
