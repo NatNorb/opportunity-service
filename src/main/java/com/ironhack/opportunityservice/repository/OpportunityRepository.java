@@ -27,6 +27,12 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
     Long countByProductAndStatus(@Param("product") String product, @Param("status") String status);
 
     @Query(value = "SELECT COUNT(*) FROM opportunity WHERE account_id in (:listId) ", nativeQuery = true)
+    Long countByCity(List<Long> listId);
+
+    @Query(value = "SELECT COUNT(*) FROM opportunity WHERE account_id in (:listId) and status = :status", nativeQuery = true)
+    Long countByCityAndStatus(List<Long> listId, String status);
+
+    @Query(value = "SELECT COUNT(*) FROM opportunity WHERE account_id in (:listId) ", nativeQuery = true)
     Long countByCountry(List<Long> listId);
 
     @Query(value = "SELECT COUNT(*) FROM opportunity WHERE account_id in (:listId) and status = :status", nativeQuery = true)
@@ -61,5 +67,7 @@ public interface OpportunityRepository extends JpaRepository<Opportunity, Long> 
 
     @Query(value = "SELECT MEDIAN(quantity*1.0) FROM opportunity WHERE account_id = :id ", nativeQuery = true)
     Double medianByAccId(@Param("id") Long id);
+
+
 
 }

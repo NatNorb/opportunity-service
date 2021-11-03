@@ -19,4 +19,9 @@ public interface AccountServiceProxy {
 
     @GetMapping("/accounts/country/{country}")
     public List<Long> listIdByCountry(@PathVariable Countries country);
+
+    @GetMapping("/accounts/cityName/{city}")
+    public List<Long> listIdByCity(@PathVariable String city);
+
+
 }

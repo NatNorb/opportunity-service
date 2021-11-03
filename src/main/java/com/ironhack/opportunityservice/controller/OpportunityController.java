@@ -79,6 +79,18 @@ public class OpportunityController {
         return opportunityRepository.countByProductAndStatus(product, status);
     }
 
+    @GetMapping("/location/city/{city}")
+    public Long countOppsByCity(@PathVariable(name = "city") String city){
+        List<Long> listId = accountServiceProxy.listIdByCity(city);
+        return opportunityRepository.countByCity(listId);
+    }
+
+    @GetMapping("/location/city")
+    public Long countOppsByCityAndStatus(@RequestParam String city, @RequestParam String status){
+        List<Long> listId = accountServiceProxy.listIdByCity(city);
+        return opportunityRepository.countByCityAndStatus(listId, status);
+    }
+
     @GetMapping("/location/country/{country}")
     public Long countOppsByCountry(@PathVariable(name = "country") Countries country){
         List<Long> listId = accountServiceProxy.listIdByCountry(country);
