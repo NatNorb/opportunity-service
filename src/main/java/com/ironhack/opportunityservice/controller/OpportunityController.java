@@ -2,8 +2,8 @@ package com.ironhack.opportunityservice.controller;
 
 import com.ironhack.opportunityservice.dao.Opportunity;
 import com.ironhack.opportunityservice.dto.OpportunityDTO;
-import com.ironhack.opportunityservice.enums.Status;
-import com.ironhack.opportunityservice.enums.Truck;
+import com.ironhack.opportunityservice.enums.Countries;
+import com.ironhack.opportunityservice.repository.AccountServiceProxy;
 import com.ironhack.opportunityservice.repository.OpportunityRepository;
 import com.ironhack.opportunityservice.service.OpportunityService;
 import com.ironhack.opportunityservice.exceptions.EmptyStringException;
@@ -12,13 +12,9 @@ import com.ironhack.opportunityservice.exceptions.InvalidEnumException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/opps")
@@ -28,6 +24,9 @@ public class OpportunityController {
     OpportunityRepository opportunityRepository;
     @Autowired
     OpportunityService opportunityService;
+    @Autowired
+    AccountServiceProxy accountServiceProxy;
+
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
@@ -80,24 +79,35 @@ public class OpportunityController {
         return opportunityRepository.countByProductAndStatus(product, status);
     }
 
-/*
     @GetMapping("/location/country/{country}")
-    public Long countOppsByCountry(@PathVariable(name = "country") Countries country);
+    public Long countOppsByCountry(@PathVariable(name = "country") Countries country){
+        List<Long> listId = accountServiceProxy.listIdByCountry(country);
+        return opportunityRepository.countByCountry(listId);
+    }
 
-    @GetMapping("/location/country")
-    public Long countOppsByCountryAndStatus(@RequestParam Countries country, @RequestParam Status status);
+   @GetMapping("/location/country")
+    public Long countOppsByCountryAndStatus(@RequestParam Countries country, @RequestParam String status){
+       List<Long> listId = accountServiceProxy.listIdByCountry(country);
+        return opportunityRepository.countByCountryAndStatus(listId, status);
+   }
+
 
     @GetMapping("/industry/{industry}")
-    public Long countOppsByIndustry(@PathVariable(name = "industry") Industry industry);
+    public Long countOppsByIndustry(@PathVariable(name = "industry") String industry){
+        List<Long> listId = accountServiceProxy.listIdByIndustry(industry);
+        return opportunityRepository.countOppsByIndustry(listId);
+    }
 
     @GetMapping("/industry")
-    public Long countOppsByIndustryAndStatus(@RequestParam Industry industry, @RequestParam Status status);
+    public Long countOppsByIndustryAndStatus(@RequestParam String industry, @RequestParam String status){
+        List<Long> listId = accountServiceProxy.listIdByIndustry(industry);
+        return opportunityRepository.countByIndustryAndStatus(listId, status);
+    }
 
-*/
+
     @GetMapping("/product/mean")
     public Double findMeanProductQuantity(){
         return opportunityRepository.meanProductQuantity();
-
     }
 
     @GetMapping("/product/max")
@@ -134,8 +144,5 @@ public class OpportunityController {
     public Double findMedianOppsByAccount(@PathVariable(name = "accountId") Long accountId){
         return opportunityRepository.medianByAccId(accountId);
     }
-
-
-
 
 }
